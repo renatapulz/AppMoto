@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, Button } from 'react-native';
 
-export default function Dicas(){
+export default function Usuario(){
     return(
         <View>
-            <Text>Informações</Text>
+            <Text>Usuario</Text>
         </View>
     )
 }
