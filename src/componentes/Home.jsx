@@ -6,8 +6,8 @@ export default function Home(){
     
     return(
        <View>
-           Seja Bem vindo!
-        <Footer/>   
+           <Text>Seja Bem vindo!</Text>
+        
        </View>
 
     )
