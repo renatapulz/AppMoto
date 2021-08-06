@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from './Home';
 import Historico from './Historico';
-import Usuario from './Usuario';
+import Editar from './Editar';
   
 const Tab = createBottomTabNavigator();
 
@@ -37,8 +37,8 @@ export default function Principal() {
         }}
       />
       <Tab.Screen
-        name="Usuario"
-        component={Usuario}
+        name="Editar"
+        component={Editar}
         options={{
           tabBarLabel: 'Usuario',
           tabBarIcon: ({ color, size }) => (

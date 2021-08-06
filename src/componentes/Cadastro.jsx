@@ -18,6 +18,7 @@ export default function Cadastro({navigation}){
         },
         email: "",
         celular:"",
+        senha:"",
       }
     
       const [contato, setContato] = useState(contatoBase)
@@ -109,6 +110,14 @@ export default function Cadastro({navigation}){
                 placeholder="Digite um número válido de celular"
                 value={contato.celular}
                 onChangeText={valor => setContato({...contato, celular: valor})}
+              />
+
+              <Text style={styles.conteudo}>Senha:</Text>
+              <TextInput style={styles.textoinput}
+                placeholder="Digite uma senha com 6 dígitos"
+                value={contato.senha}
+                secureTextEntry={true}
+                onChangeText={valor => setContato({...contato, senha: valor})}
               />
 
               
