@@ -3,8 +3,8 @@ import { View, Text, Button } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from './Home';
-import Conta from './Conta';
-import Dicas from './Dicas';
+import Historico from './Historico';
+import Usuario from './Usuario';
   
 const Tab = createBottomTabNavigator();
 
@@ -27,20 +27,20 @@ export default function Principal() {
         }}
       />
       <Tab.Screen
-        name="Conta"
-        component={Conta}
+        name="Historico"
+        component={Historico}
         options={{
-          tabBarLabel: 'Conta',
+          tabBarLabel: 'Historico',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name='cash-outline' color={color} size={size} />
           ),
         }}
       />
       <Tab.Screen
-        name="Dicas"
-        component={Dicas}
+        name="Usuario"
+        component={Usuario}
         options={{
-          tabBarLabel: 'Dicas',
+          tabBarLabel: 'Usuario',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="star-half-outline" color={color} size={size} />
           ),
