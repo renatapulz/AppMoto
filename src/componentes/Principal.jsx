@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Button } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Icon } from 'react-native-elements/dist/icons/Icon';
 import Home from './Home';
 import Historico from './Historico';
 import Editar from './Editar';
@@ -13,16 +14,16 @@ export default function Principal() {
     <Tab.Navigator
       initialRouteName="Principal"
       tabBarOptions={{
-        activeTintColor: '#e91e63',
+        activeTintColor: '#FF6701',
       }}
     >
       <Tab.Screen
-        name="Home"
+        name="Corridas"
         component={Home}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Corridas',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name='home' color={color} size={size} />
+            <Icon name="motorcycle"/>
           ),
         }}
       />
@@ -32,7 +33,7 @@ export default function Principal() {
         options={{
           tabBarLabel: 'Historico',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name='cash-outline' color={color} size={size} />
+            <Ionicons name='bar-chart-outline' color={color} size={size} />
           ),
         }}
       />
@@ -42,7 +43,7 @@ export default function Principal() {
         options={{
           tabBarLabel: 'Usuario',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="star-half-outline" color={color} size={size} />
+            <Ionicons name='person-outline' color={color} size={size} />
           ),
         }}
       />

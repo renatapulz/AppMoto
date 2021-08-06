@@ -126,6 +126,13 @@ export default function Editar() {
           }}>
           <Text style={styles.textbuttom}>Alterar</Text>
         </TouchableOpacity>
+
+        <View>
+          <TouchableOpacity style={styles.buttom} 
+            onPress={() => {}}>
+            <Text style={styles.textbuttom}>Sair</Text>
+          </TouchableOpacity>
+        </View>
        
       <StatusBar style="auto" />
     </KeyboardAvoidingView>
