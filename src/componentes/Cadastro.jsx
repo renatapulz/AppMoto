@@ -1,151 +1,216 @@
 import React from 'react';
 import { useState } from 'react';
-import { KeyboardAvoidingView, View, Text, TextInput, Image, TouchableOpacity, StyleSheet, CheckBox, Platform } from 'react-native';
+import { StatusBar , KeyboardAvoidingView, View, Text, TextInput, Image, TouchableOpacity, StyleSheet, CheckBox, Platform, ScrollView } from 'react-native';
+import { firebaseDB } from './firebase';
 
 export default function Cadastro({navigation}){
-    const [nome,setNome] = useState(null);
-    const [email,setEmail] = useState(null);
-    const [telefone,setTelefone] = useState(null);
-    const [cpf,setCpf] = useState(null);
-    const [password, setPassword] = useState(null);
 
-    const [isSelected, setSelection] = useState(false);
+    const contatoBase = {
+        nome: "",
+        cpf: "",
+        endereco: {
+          rua:"",
+          numero:"",
+          complemento: "",
+          bairro:"",
+          cidade: "",
+          cep: "",
+        },
+        email: "",
+        celular:"",
+      }
+    
+      const [contato, setContato] = useState(contatoBase)
 
-    const enviarDados = () => {
-        navigation.navigate('Principal')
-    }
+      const [isSelected, setSelection] = useState(false);
+
+      const adicionar = () => {
+        firebaseDB.collection('clientes').doc().set({
+          dados: contato
+        });
+        setContato(contatoBase);
+        setSelection(false)
+      }
 
     return(
-        <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-                <Image
-                style={styles.logo}
-                source={require('../logo.png')}
-                />
-            <Text style={styles.cadastro}>CADASTRE-SE</Text>
-
+      <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
+        <ScrollView>
+            <Image
+              style={styles.logo}
+              source={require('../logo.png')}
+            />
+            <Text style={styles.cadastro}>CADASTRO</Text>
             <View style={styles.viewText}>
-                <TextInput
-                    style={styles.input}
-                    placeholder='Nome'
-                    autoCorrect={false}
-                    keyboardType='default'
-                    onChangeText={(value) => setNome(value)}
-                />
+              <Text style={styles.conteudo}>Nome:</Text>
+              <TextInput style={styles.textoinput}
+                placeholder="Nome"
+                value={contato.nome}
+                onChangeText={valor => setContato({...contato, nome: valor})}
+              />
 
-                <TextInput
-                    style={styles.input}
-                    placeholder='Email'
-                    autoCorrect={false}
-                    keyboardType='email-address'
-                    onChangeText={(value) => setEmail(value)}
-                />
+              <Text style={styles.conteudo}>Cpf:</Text>
+              <TextInput style={styles.textoinput}
+                placeholder="Digite um CPF válido"
+                value={contato.cpf}
+                onChangeText={valor => setContato({...contato, cpf: valor})}
+              />  
 
-                <TextInput
-                    style={styles.input}
-                    placeholder='Telefone'
-                    autoCorrect={false}
-                    keyboardType='numeric'
-                    onChangeText={(value) => setTelefone(value)}
-                />
+              <Text style={styles.conteudo}>Endereço:</Text>
+              <TextInput style={styles.textoinput}
+                placeholder="Digite seu endereço"
+                value={contato.endereco.rua}
+                onChangeText={valor => setContato({...contato, endereco: {...contato.endereco, rua: valor}})}
+              />
 
-                <TextInput
-                    style={styles.input}
-                    placeholder='CPF'
-                    autoCorrect={false}
-                    keyboardType='numeric'
-                    onChangeText={(value) => setCpf(value)}
-                />
+              <Text style={styles.conteudo}>Número:</Text>
+              <TextInput style={styles.textoinput}
+                placeholder="Digite o número da residência"
+                value={contato.endereco.numero}
+                onChangeText={valor => setContato({...contato, endereco: {...contato.endereco, numero: valor}})}
+              />
 
-                <TextInput
-                    style={styles.input}
-                    placeholder='Senha'
-                    autoCorrect={false}
-                    keyboardType='numeric'
-                    onChangeText={(value) => setPassword(value)}
-                />
-                <View style={styles.checkContainer}>
-                <View style={styles.checkAlign}>
-                    <CheckBox
+              <Text style={styles.conteudo}>Complemento:</Text>
+              <TextInput style={styles.textoinput}
+                placeholder="Espaço para complemento"
+                value={contato.endereco.complemento}
+                onChangeText={valor => setContato({...contato, endereco: {...contato.endereco, complemento: valor}})}
+              />
+
+              <Text style={styles.conteudo}>Bairro:</Text>
+              <TextInput style={styles.textoinput}
+                placeholder="Digite o bairro"
+                value={contato.endereco.bairro}
+                onChangeText={valor => setContato({...contato, endereco: {...contato.endereco, bairro: valor}})}
+              />
+
+              <Text style={styles.conteudo}>Cidade:</Text>
+              <TextInput style={styles.textoinput}
+                placeholder="Digite a cidade"
+                value={contato.endereco.cidade}
+                onChangeText={valor => setContato({...contato, endereco: {...contato.endereco, cidade: valor}})}
+              />
+
+              <Text style={styles.conteudo}>Cep:</Text>
+              <TextInput style={styles.textoinput}
+                placeholder="Digite o cep"
+                value={contato.endereco.cep}
+                onChangeText={valor => setContato({...contato, endereco: {...contato.endereco, cep: valor}})}
+              />
+
+              <Text style={styles.conteudo}>Email:</Text>
+              <TextInput style={styles.textoinput}
+              placeholder="Email"
+              value={contato.email}
+              onChangeText={valor => setContato({...contato, email: valor})}
+              />
+
+              <Text style={styles.conteudo}>Celular:</Text>
+              <TextInput style={styles.textoinput}
+                placeholder="Digite um número válido de celular"
+                value={contato.celular}
+                onChangeText={valor => setContato({...contato, celular: valor})}
+              />
+
+              
+            </View>
+
+            <View style={styles.checkContainer}>
+              <View style={styles.checkAlign}>
+                  <CheckBox
                     value={isSelected}
                     onValueChange={setSelection}
                     style={styles.checkbox}
-                    />
-                    <Text style={styles.label}> Eu aceito os termos de uso</Text>
-                </View>
-                </View>
-
-                <TouchableOpacity
-                    style={styles.btnCadastro}
-                    onPress={() => enviarDados()}
-                    >
-                    <Text style={styles.textCadastro}>Enviar Dados</Text>
-                </TouchableOpacity>
+                  />
+                  <Text style={styles.label}> Eu aceito os termos de uso</Text>
+              </View>
             </View>
-        </KeyboardAvoidingView>
-    )
+
+            <TouchableOpacity style={styles.buttom} 
+              onPress={() => {
+                adicionar()
+              }}>
+              <Text style={styles.textbuttom}>Adicionar</Text>
+            </TouchableOpacity>
+                  
+            <StatusBar style="auto" />
+        </ScrollView>    
+      </KeyboardAvoidingView>
+  )
 }
 
 const styles = StyleSheet.create({
     container:{
-        flex:1,
-        backgroundColor:'#FEA82F',
-        alignItems:'center',
-        justifyContent:'center',
-
+      backgroundColor:'#FEA82F',
     },
 
     logo:{
-        width:150,
-        height:120,
-        
+      width:150,
+      height:120,
+      alignSelf: "center",
     },
 
     cadastro:{
-        color:'white',
-        fontSize:22,
-        
+      color:'white',
+      fontSize:20,
+      textAlign: "center",
+      marginBottom: 10 
     },
+
+    conteudo: {
+      marginHorizontal: 20,
+      marginTop:10,
+      fontSize: 20,
+      fontWeight: "400",
+      
+    },
+
     viewText:{
-        flex:1,
-        alignItems:'center',
-        justifyContent:'center',
-        width:'90%',
-        paddingBottom:15,
+      width:'90%',
     },
-    input:{
-        backgroundColor:'white',
-        width:'90%',
-        marginBottom:15,
-        color:'#222',
-        borderRadius:10,
-        fontSize:17,
-        padding:10,
-    },
-    btnCadastro:{
-        backgroundColor: '#FF6701',
-        width:'50%',
-        height:'10%',
-        alignItems:'center',
-        justifyContent:'center',
-        borderRadius:10,
-    },
-    textCadastro:{
-        color:'white',
-        fontSize:20,
-    },
+    
     checkContainer:{
-        alignItems: "center",
-        justifyContent: "center",
+      alignItems: "center",
+      justifyContent: "center",
     },
     checkAlign:{
-        flexDirection: "row",
-        marginBottom: 20,
+      flexDirection: "row",
+      marginBottom: 20,
     },
     checkbox: {
-        alignSelf: "center",
+      alignSelf: "center",
     },
     label:{
-        color:'white',
-        margin: 8,
+      color:'white',
+      margin: 8,
+    },
+    
+    textoinput: {
+      marginHorizontal: 21,
+      fontSize: 16,
+      borderWidth:3,
+      borderColor: "white",
+      backgroundColor:"white", 
+      marginBottom: 15,
+      marginTop:5,
+      padding: 5,
+      borderRadius:8,
+    },
+
+    buttom: {  
+      backgroundColor: "#FF6701",
+      marginBottom: 20,
+      padding: 10,
+      borderRadius: 8,
+      borderWidth: 1,
+      borderColor:"#FF6701",
+      width: 150,
+      alignItems: "center",
+      alignSelf:"center",
+    },
+    
+    textbuttom:{
+      color: "#DFF6F0",
+      fontSize: 20,
+      fontWeight: "bold",
     }
 });
