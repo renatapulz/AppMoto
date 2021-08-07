@@ -1,6 +1,6 @@
-import React, {useState,useEffect,useRef} from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
-import {styles} from '../../css';
+import React from 'react';
+import { Text, View } from 'react-native';
+import {styles} from '../../css/style';
 
 export default function Checkout(props) {
 

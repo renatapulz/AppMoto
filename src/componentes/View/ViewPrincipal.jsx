@@ -1,8 +1,8 @@
-import React, {useState,useEffect,useRef} from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import {ViewMap, Checkout} from './View';
+import Checkout from './Checkout';
+import ViewMap from './ViewMap';
 
 const Stack = createStackNavigator();
 

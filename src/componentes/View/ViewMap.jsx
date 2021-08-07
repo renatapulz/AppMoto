@@ -9,28 +9,57 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 import MapViewDirections from 'react-native-maps-directions';
 import { MaterialIcons } from '@expo/vector-icons';
 
+/*
+// comandos de instalação no cmd
+
+// npm install react-native-maps --save-exact
+
+// expo install expo-location
+
+// expo install expo-permissions
+
+// npm install react-native-google-places-autocomplete --save
+
+// npm install react-native-maps-directions
+
+// npm install @react-navigation/native
+
+// expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-masked-view/masked-view
+
+//npm install @react-navigation/stack
+*/
+
 export default function ViewMap(props) {
 
+    //constante para referênciar o mapa
     const mapEl=useRef(null);
+
+    //constante que armazena o valor da origem
     const [origin,setOrigin]=useState(null);
+
+    //constante que armazena o valor do destino
     const [destination,setDestination]=useState(null);
+
+    //constante que armazena o valor da distância
     const [distance,setDistance]=useState(null);
+
+    //constante que armazena o valor do preço
     const [price,setPrice]=useState(null);
 
-
+    //Função UseEffect é utilizada para solicitar a permissão ao usuario para utilizarmos sua localização
     useEffect(()=>{
         (async function(){
             const { status, permissions } = await Permissions.askAsync(Permissions.LOCATION);
-            if (status === 'granted') {
+            if (status === 'granted') {                     // Se usuário autorizar Location é capiturado
                 let location = await Location.getCurrentPositionAsync({enableHighAccuracy: true});
-                setOrigin({
+                setOrigin({                                 //Estamos adicionando as cordenadas extraidas em Location 
                     latitude: location.coords.latitude,
                     longitude: location.coords.longitude,
                     latitudeDelta: 0.000922,
                     longitudeDelta: 0.000421
                 })
             } else {
-                throw new Error('Location permission not granted');
+                throw new Error('Localização negada');
             }
         })();
     },[]);
@@ -38,24 +67,24 @@ export default function ViewMap(props) {
     
     return (
         <View style={styles.container2}>
-            <MapView
+            <MapView                       //Responsavel por renderizar o mapa
                     style={styles.map}
                     initialRegion={origin}
                     showsUserLocation={true}
-                    zoomEnabled={false}
+                    zoomEnabled={false}    //Se true deixa o usuário dar zoom na tela
                     loadingEnabled={true}
-                    ref={mapEl}
+                    ref={mapEl}            //Fazendo referência ao mapa      
             >
                 {destination &&
-                <MapViewDirections
+                <MapViewDirections         //Responsavel em traçar a direção
                         origin={origin}
                         destination={destination}
                         apikey={config.googleApi}
-                        strokeWidth={3}
+                        strokeWidth={3}   //Espessura da lilha que mostra a direção 
                         onReady={result=>{
-                        setDistance(result.distance);
-                        setPrice(result.distance*3);
-                        mapEl.current.fitToCoordinates(
+                        setDistance(result.distance);   //extrai de result o valor da distância
+                        setPrice(result.distance*3);    //Faz o calculo da distância x valor
+                        mapEl.current.fitToCoordinates( //Responsavél por fitar a linha de cordenadas no mapa 
                             result.coordinates,{
                                 edgePadding:{
                                     top:50,
@@ -73,7 +102,9 @@ export default function ViewMap(props) {
             </MapView>
 
             <View style={styles.search}>
-                <GooglePlacesAutocomplete
+
+                {/* Responsavél pelo campo de preenchimento com auto complete devido a chave Key googleApi que está ativada na pasta config */}
+                <GooglePlacesAutocomplete               
                         placeholder='Para onde vamos?'
                         onPress={(data, details = null) => {
                         setDestination({
@@ -94,8 +125,9 @@ export default function ViewMap(props) {
                         container:{position:'absolute',width:'100%'}
                     }}
                 />
-
-                {distance &&
+                
+                {/* Se tiver distância referênte a viajem essa parte de baixo é exibida */}
+                {distance && 
                 <View style={styles.distance}>
                     <Text style={styles.distance__text}>Distância: {distance.toFixed(2).replace('.',',')}km</Text>
                     <TouchableOpacity style={styles.price} onPress={() => props.navigation.navigate('Checkout',{price: price.toFixed(2)})}>

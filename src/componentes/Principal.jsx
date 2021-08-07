@@ -19,7 +19,7 @@ export default function Principal() {
     >
       <Tab.Screen
         name="Corridas"
-        component={ViewPrincipal}
+        component={ViewPrincipal}// estou chamando outra página de navegação
         options={{
           tabBarLabel: 'Corridas',
           tabBarIcon: ({ color, size }) => (
