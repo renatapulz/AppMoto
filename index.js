@@ -7,3 +7,9 @@ import App from './App';
 // It also ensures that whether you load the app in Expo Go or in a native build,
 // the environment is set up appropriately
 registerRootComponent(App);
+
+//itens relacionados a ViewMap e Checkout 
+import ViewMap from './src/componentes/View/ViewMap';
+import Checkout from './src/componentes/View/Checkout';
+
+export {ViewMap, Checkout};
