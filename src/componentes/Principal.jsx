@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { StyleSheet, View, Text, Button } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Icon } from 'react-native-elements/dist/icons/Icon';
@@ -23,7 +23,7 @@ export default function Principal() {
         options={{
           tabBarLabel: 'Corridas',
           tabBarIcon: ({ color, size }) => (
-            <Icon name="motorcycle"/>
+            <Icon name="motorcycle" color={color} size={35} />
           ),
         }}
       />
@@ -50,3 +50,10 @@ export default function Principal() {
     </Tab.Navigator>
   );
 }
+
+const styles = StyleSheet.create({
+  container:{
+    paddingVertical: 10,
+  }
+
+});
