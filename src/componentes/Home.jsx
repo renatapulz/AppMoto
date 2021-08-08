@@ -9,13 +9,14 @@ export default function Home() {
   if (cliente) {
     nomeCliente = cliente.dados.nome;
   }
-
+//nao da pra puxar direto, pq as vezes nao dava tempo de carregar a pagina e aparecia undefinead ou dava erro
   return(
     <View>
       <Text>Olá {nomeCliente}. Seja Bem vindo!</Text>
     </View>
   )
 }
+
 
 const styles = StyleSheet.create({
   container:{

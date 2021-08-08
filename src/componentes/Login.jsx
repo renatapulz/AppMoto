@@ -1,6 +1,6 @@
 import React from 'react';
-import { useState, useContext, useEffect } from 'react';
-import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { useState, useContext } from 'react';
+import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform} from 'react-native';
 import { ContextoLogin } from '../contexto/contextoLogin';
 
 export default function Login({navigation}) {
@@ -9,7 +9,7 @@ export default function Login({navigation}) {
     const { entrar, user } = useContext(ContextoLogin);
 
     return(
-        <View style={styles.container}>
+        <KeyboardAvoidingView style={styles.container} style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
             <View style={styles.viewLogo}>
                 <Image
                 style={user && !user.emailVerified ? styles.logo2 : styles.logo}
@@ -30,7 +30,7 @@ export default function Login({navigation}) {
                     style={styles.input}
                     placeholder='Senha'
                     autoCorrect={false}
-                    keyboardType='numeric'
+                    keyboardType="numbers-and-punctuation"
                     secureTextEntry={true}
                     onChangeText={(value) => setSenha(value)}
                 />
@@ -52,7 +52,7 @@ export default function Login({navigation}) {
                     <Text style={styles.btnColor}>Criar conta</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </KeyboardAvoidingView>
     )
 }
 
