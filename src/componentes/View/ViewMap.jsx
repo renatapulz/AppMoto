@@ -1,5 +1,5 @@
 import React, {useState,useEffect,useRef} from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
 import {styles} from '../../css/style';
 import MapView from 'react-native-maps';
 import * as Location from 'expo-location';
@@ -66,7 +66,7 @@ export default function ViewMap(props) {
 
     
     return (
-        <View style={styles.container2}>
+        <KeyboardAvoidingView style={styles.container2} behavior={Platform.OS === "ios" ? "padding" : "height"}>
             <MapView                       //Responsavel por renderizar o mapa
                     style={styles.map}
                     initialRegion={origin}
@@ -101,8 +101,8 @@ export default function ViewMap(props) {
                 }
 
             </MapView>
-
             <View style={styles.search}>
+            
 
                 {/* Responsavél pelo campo de preenchimento com auto complete devido a chave Key googleApi que está ativada na pasta config */}
                 <GooglePlacesAutocomplete               
@@ -144,6 +144,6 @@ export default function ViewMap(props) {
                 </View>
                 }
             </View>
-        </View>
+        </KeyboardAvoidingView>
     );
 }
