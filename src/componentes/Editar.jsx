@@ -1,13 +1,16 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { StatusBar, StyleSheet, View, KeyboardAvoidingView, Image, ScrollView, Platform, TextInput, TouchableOpacity, Text } from 'react-native';
 import { firebaseDB } from './firebase';
+import { ContextoLogin } from '../contexto/contextoLogin';
 
 export default function Editar() {
-  const id = 'EIPDJ1Klvenn7Kny5gGE';
+  const { user, sair } = useContext(ContextoLogin);
+  const id = user.uid;
 
   const [contato, setContato] = useState({
     nome: "",
     cpf: "",
+    celular:"",
     endereco: {
       rua:"",
       numero:"",
@@ -15,10 +18,7 @@ export default function Editar() {
       bairro:"",
       cidade: "",
       cep: "",
-    },
-    email: "",
-    celular:"",
-    senha:"",
+    }
   })
 
   useEffect(() => {
@@ -28,7 +28,9 @@ export default function Editar() {
   const userById = async () => {
     const clientes = firebaseDB.collection('clientes');
     const doc = await clientes.doc(id).get();
-    setContato(doc.data().dados);
+    if(doc.data()) {
+      setContato(doc.data().dados);
+    }
   }
 
   const alterar = async () => {
@@ -97,27 +99,12 @@ export default function Editar() {
             onChangeText={valor => setContato({...contato, endereco: {...contato.endereco, cep: valor}})}
           />
 
-          <Text style={styles.conteudo}>Email:</Text>
-          <TextInput style={styles.textoinput}
-          placeholder="Email"
-          value={contato.email}
-          onChangeText={valor => setContato({...contato, email: valor})}
-          />
-
           <Text style={styles.conteudo}>Celular:</Text>
           <TextInput style={styles.textoinput}
             placeholder="Digite um número válido de celular"
             value={contato.celular}
             onChangeText={valor => setContato({...contato, celular: valor})}
           /> 
-
-          <Text style={styles.conteudo}>Senha:</Text>
-            <TextInput style={styles.textoinput}
-              placeholder="Digite uma senha com 6 dígitos"
-              value={contato.senha}
-              secureTextEntry={true}
-              onChangeText={valor => setContato({...contato, senha: valor})}
-            />
         </View>
 
         <TouchableOpacity style={styles.buttom} 
@@ -129,7 +116,7 @@ export default function Editar() {
 
         <View>
           <TouchableOpacity style={styles.buttom} 
-            onPress={() => {}}>
+            onPress={() => {sair()}}>
             <Text style={styles.textbuttom}>Sair</Text>
           </TouchableOpacity>
         </View>

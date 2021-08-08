@@ -1,25 +1,18 @@
 import React from 'react';
-import { useState } from 'react';
-import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { useState, useContext } from 'react';
+import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform} from 'react-native';
+import { ContextoLogin } from '../contexto/contextoLogin';
 
-export default function Login({navigation}){
-    const [email,setEmail] = useState(null);
-    const [password, setPassword] = useState(null);
-    const entrar = () => {
-        navigation.reset({
-            index:0,
-            routes: [{name:'Home'}]
-        })
-    }
-    const cadastrar = () => {
-        navigation.navigate('Cadastro')
-    }
+export default function Login({navigation}) {
+    const [email, setEmail] = useState(null);
+    const [senha, setSenha] = useState(null);
+    const { entrar, user } = useContext(ContextoLogin);
 
     return(
-        <View style={styles.container}>
+        <KeyboardAvoidingView style={styles.container} style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
             <View style={styles.viewLogo}>
                 <Image
-                style={styles.logo}
+                style={user && !user.emailVerified ? styles.logo2 : styles.logo}
                 source={require('../logo.png')}
                 />
             </View>
@@ -32,31 +25,34 @@ export default function Login({navigation}){
                     keyboardType='email-address'
                     onChangeText={(value) => setEmail(value)}
                 />
+
                 <TextInput
                     style={styles.input}
                     placeholder='Senha'
                     autoCorrect={false}
-                    keyboardType='numeric'
+                    keyboardType="numbers-and-punctuation"
                     secureTextEntry={true}
-                    onChangeText={(value) => setPassword(value)}
+                    onChangeText={(value) => setSenha(value)}
                 />
+
                 <TouchableOpacity
                     style={styles.btnSubmit}
-                    onPress={() => entrar()}
-                    >
+                    onPress={() => entrar(email, senha)}>
                     <Text style={styles.textSubmit}>Entrar</Text>
                 </TouchableOpacity>
+                
                 <TouchableOpacity style={styles.btnElse}>
                     <Text style={styles.btnColor}>Esqueci minha senha</Text>
                 </TouchableOpacity>
+                
                 <TouchableOpacity
                     style={styles.btnElse}
-                    onPress={() => cadastrar()}
-                    >
+                    onPress={() => 
+                        navigation.navigate('Cadastro')}>
                     <Text style={styles.btnColor}>Criar conta</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </KeyboardAvoidingView>
     )
 }
 
@@ -71,10 +67,14 @@ const styles = StyleSheet.create({
     viewLogo:{
         flex:1,
     },
-    logo:{
-        width:300,
-        height:300,
-        marginTop:'15%'
+    logo: {
+        width: 300,
+        height: 300,
+        marginTop: '15%'
+    },
+    logo2: {
+        width: 300,
+        height: 300
     },
     viewText:{
         flex:1,
@@ -110,4 +110,12 @@ const styles = StyleSheet.create({
     btnColor:{
         color:'black'
     },
+    email: {
+        color:'#FF6701',
+        padding: 20,
+        textAlign: 'center',
+        backgroundColor: '#FFF',
+        fontWeight: 'bold',
+        zIndex: 100
+    }
 });

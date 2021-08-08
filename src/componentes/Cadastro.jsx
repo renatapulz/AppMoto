@@ -1,37 +1,36 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { StatusBar , KeyboardAvoidingView, View, Text, TextInput, Image, TouchableOpacity, StyleSheet, CheckBox, Platform, ScrollView } from 'react-native';
-import { firebaseDB } from './firebase';
+import { ContextoLogin } from '../contexto/contextoLogin';
 
-export default function Cadastro({navigation}){
+export default function Cadastro({navigation}) {
+  const { registrar } = useContext(ContextoLogin);
 
-    const contatoBase = {
-        nome: "",
-        cpf: "",
-        endereco: {
-          rua:"",
-          numero:"",
-          complemento: "",
-          bairro:"",
-          cidade: "",
-          cep: "",
-        },
-        email: "",
-        celular:"",
-        senha:"",
+  const contatoBase = {
+      nome: "",
+      celular:"",
+      cpf: "",
+      endereco: {
+        rua:"",
+        numero:"",
+        complemento: "",
+        bairro:"",
+        cidade: "",
+        cep: "",
       }
-    
-      const [contato, setContato] = useState(contatoBase)
+    }
+  
+    const [contato, setContato] = useState(contatoBase);
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
+    const [isSelected, setSelection] = useState(false);
 
-      const [isSelected, setSelection] = useState(false);
-
-      const adicionar = () => {
-        firebaseDB.collection('clientes').doc().set({
-          dados: contato
-        });
-        setContato(contatoBase);
-        setSelection(false)
-      }
+    const adicionar = () => {
+      registrar(email, senha, contato)
+      setContato(contatoBase);
+      setSelection(false)
+      navigation.navigate('Login')
+    }
 
     return(
       <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
@@ -41,29 +40,45 @@ export default function Cadastro({navigation}){
               source={require('../logo.png')}
             />
             <Text style={styles.cadastro}>CADASTRO</Text>
+
+            <Text style={styles.conteudo}>Email*:</Text>
+            <TextInput style={styles.textoinput}
+              placeholder="Email"
+              value={email}
+              onChangeText={valor => setEmail(valor)}
+              />
+
+            <Text style={styles.conteudo}>Senha*:</Text>
+            <TextInput style={styles.textoinput}
+                placeholder="Digite uma senha com 6 dígitos"
+                value={senha}
+                secureTextEntry={true}
+                onChangeText={valor => setSenha(valor)}
+              />
+
             <View style={styles.viewText}>
-              <Text style={styles.conteudo}>Nome:</Text>
+              <Text style={styles.conteudo}>Nome*:</Text>
               <TextInput style={styles.textoinput}
                 placeholder="Nome"
                 value={contato.nome}
                 onChangeText={valor => setContato({...contato, nome: valor})}
               />
 
-              <Text style={styles.conteudo}>Cpf:</Text>
+              <Text style={styles.conteudo}>CPF*:</Text>
               <TextInput style={styles.textoinput}
                 placeholder="Digite um CPF válido"
                 value={contato.cpf}
                 onChangeText={valor => setContato({...contato, cpf: valor})}
               />  
 
-              <Text style={styles.conteudo}>Endereço:</Text>
+              <Text style={styles.conteudo}>Endereço*:</Text>
               <TextInput style={styles.textoinput}
                 placeholder="Digite seu endereço"
                 value={contato.endereco.rua}
                 onChangeText={valor => setContato({...contato, endereco: {...contato.endereco, rua: valor}})}
               />
 
-              <Text style={styles.conteudo}>Número:</Text>
+              <Text style={styles.conteudo}>Número*:</Text>
               <TextInput style={styles.textoinput}
                 placeholder="Digite o número da residência"
                 value={contato.endereco.numero}
@@ -84,7 +99,7 @@ export default function Cadastro({navigation}){
                 onChangeText={valor => setContato({...contato, endereco: {...contato.endereco, bairro: valor}})}
               />
 
-              <Text style={styles.conteudo}>Cidade:</Text>
+              <Text style={styles.conteudo}>Cidade*:</Text>
               <TextInput style={styles.textoinput}
                 placeholder="Digite a cidade"
                 value={contato.endereco.cidade}
@@ -98,29 +113,12 @@ export default function Cadastro({navigation}){
                 onChangeText={valor => setContato({...contato, endereco: {...contato.endereco, cep: valor}})}
               />
 
-              <Text style={styles.conteudo}>Email:</Text>
-              <TextInput style={styles.textoinput}
-              placeholder="Email"
-              value={contato.email}
-              onChangeText={valor => setContato({...contato, email: valor})}
-              />
-
-              <Text style={styles.conteudo}>Celular:</Text>
+              <Text style={styles.conteudo}>Celular*:</Text>
               <TextInput style={styles.textoinput}
                 placeholder="Digite um número válido de celular"
                 value={contato.celular}
                 onChangeText={valor => setContato({...contato, celular: valor})}
               />
-
-              <Text style={styles.conteudo}>Senha:</Text>
-              <TextInput style={styles.textoinput}
-                placeholder="Digite uma senha com 6 dígitos"
-                value={contato.senha}
-                secureTextEntry={true}
-                onChangeText={valor => setContato({...contato, senha: valor})}
-              />
-
-              
             </View>
 
             <View style={styles.checkContainer}>
@@ -136,7 +134,21 @@ export default function Cadastro({navigation}){
 
             <TouchableOpacity style={styles.buttom} 
               onPress={() => {
-                adicionar()
+                if (senha.length < 6) {
+                  alert("Senha tem que ser igual ou maior que 6 digitos.");
+                }
+                else if (
+                  contato.nome === '' || email === '' || 
+                  contato.cpf === '' || contato.endereco.rua === '' || 
+                  contato.endereco.numero === '' || contato.endereco.cidade === '' || 
+                  contato.celular === ''
+                  ) {
+                  alert("Todos os campos com * são obrigatórios.")
+                }
+                else {
+                  adicionar()
+                }
+                
               }}>
               <Text style={styles.textbuttom}>Adicionar</Text>
             </TouchableOpacity>
