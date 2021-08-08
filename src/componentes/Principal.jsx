@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Button } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Icon } from 'react-native-elements/dist/icons/Icon';
-import Home from './Home';
+import ViewMap from './View/ViewMap'; // estou importando a págia que esta a função ViewMap
 import Historico from './Historico';
 import Editar from './Editar';
   
@@ -19,7 +19,7 @@ export default function Principal() {
     >
       <Tab.Screen
         name="Corridas"
-        component={Home}
+        component={ViewMap} // estou chamando o mapa que será a tela principal
         options={{
           tabBarLabel: 'Corridas',
           tabBarIcon: ({ color, size }) => (
