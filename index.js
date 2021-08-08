@@ -8,8 +8,6 @@ import App from './App';
 // the environment is set up appropriately
 registerRootComponent(App);
 
-//itens relacionados a ViewMap e Checkout 
-import ViewMap from './src/componentes/View/ViewMap';
-import Checkout from './src/componentes/View/Checkout';
 
-export {ViewMap, Checkout};
+
+

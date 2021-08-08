@@ -106,21 +106,25 @@ import { StyleSheet } from "react-native";
     },
     distance:{
         flex:1,
+        backgroundColor:'#FF6701',
         justifyContent: 'center',
-        alignItems:'flex-end',
-        padding: 10
+        alignItems:'center',
+        padding: 10,
+        marginTop:10
+       
     },
     distance__text:{
         fontSize:20,
         fontWeight:'bold'
     },
     price:{
-        backgroundColor: '#000',
-        padding: 7,
+        backgroundColor: '#FF6701',
+        padding: 10,
         borderRadius:4,
         marginTop:30,
         justifyContent:'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        
     },
     price__txt:{
         color:'#fff',

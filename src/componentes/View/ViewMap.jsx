@@ -4,7 +4,7 @@ import {styles} from '../../css/style';
 import MapView from 'react-native-maps';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
-import config from '../config';
+import config from '../../config/index.json';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import MapViewDirections from 'react-native-maps-directions';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -81,6 +81,7 @@ export default function ViewMap(props) {
                         destination={destination}
                         apikey={config.googleApi}
                         strokeWidth={3}   //Espessura da lilha que mostra a direção 
+                        lineDashPattern={[3]}  
                         onReady={result=>{
                         setDistance(result.distance);   //extrai de result o valor da distância
                         setPrice(result.distance*3);    //Faz o calculo da distância x valor
@@ -126,13 +127,20 @@ export default function ViewMap(props) {
                     }}
                 />
                 
-                {/* Se tiver distância referênte a viajem essa parte de baixo é exibida */}
+                {/* Se tiver distância referênte a viajem essa parte de baixo é exibida 
+                //toFixed(2).replace('.',',') está dando erro no código
+                */}
                 {distance && 
                 <View style={styles.distance}>
-                    <Text style={styles.distance__text}>Distância: {distance.toFixed(2).replace('.',',')}km</Text>
+                    <Text style={styles.distance__text}>Distância: {distance}km</Text>
+                    <Text style={styles.distance__text}>Preço: R${price}</Text>
+                    <TouchableOpacity style={styles.price}> 
+                    <Text>Solicitar viagem</Text>
+                    </TouchableOpacity>
+                    {/* <Text style={styles.distance__text}>Distância: {distance.toFixed(2).replace('.',',')}km</Text>
                     <TouchableOpacity style={styles.price} onPress={() => props.navigation.navigate('Checkout',{price: price.toFixed(2)})}>
                         <Text style={styles.price__text}><MaterialIcons name="payment" size={24} color="white" /> Pagar R${price.toFixed(2).replace('.',',')}</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
                 }
             </View>
