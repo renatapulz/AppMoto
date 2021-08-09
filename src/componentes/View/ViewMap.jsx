@@ -205,7 +205,7 @@ export default function ViewMap({navigation}) {
                     <Text style={styles.distance__text}>Distância: {distance}km</Text>
                     <Text style={styles.distance__text}>Preço: R${price}</Text>
                     {originName ? <TouchableOpacity style={styles.price} onPress = {() => solicitarViagem()}> 
-                        <Text>Solicitar viagem</Text>
+                        <Text style={styles.textoprice}>Solicitar viagem</Text>
                     </TouchableOpacity> : <Text>Aguarde...</Text>}
                     
                     {/* <Text style={styles.distance__text}>Distância: {distance.toFixed(2).replace('.',',')}km</Text>

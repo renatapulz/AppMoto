@@ -9,13 +9,12 @@ export default function Login({navigation}) {
     const { entrar, user } = useContext(ContextoLogin);
 
     return(
-        <KeyboardAvoidingView style={styles.container} style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-            <View style={styles.viewLogo}>
+        <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
                 <Image
-                style={user && !user.emailVerified ? styles.logo2 : styles.logo}
+                style={styles.logo}
                 source={require('../logo.png')}
                 />
-            </View>
+            
 
             <View style={styles.viewText}>
                 <TextInput
@@ -64,20 +63,13 @@ const styles = StyleSheet.create({
         justifyContent:'center',
 
     },
-    viewLogo:{
-        flex:1,
-    },
+    
     logo: {
         width: 300,
         height: 300,
-        marginTop: '15%'
-    },
-    logo2: {
-        width: 300,
-        height: 300
+        
     },
     viewText:{
-        flex:1,
         alignItems:'center',
         justifyContent:'center',
         width:'90%',
@@ -94,15 +86,15 @@ const styles = StyleSheet.create({
     },
     btnSubmit:{
         backgroundColor: '#FF6701',
-        width:'30%',
-        height:'15%',
+        padding: 10,
+        width: 100,
         alignItems:'center',
         justifyContent:'center',
         borderRadius:10,
     },
     textSubmit:{
         color:'white',
-        fontSize:18,
+        fontSize:20,
     },
     btnElse:{
         marginTop:10,
