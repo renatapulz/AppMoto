@@ -45,7 +45,8 @@ const Paginas = () => {
   if (initializing) return null;
 
   return (
-    //retorna navegacao para a pagina principal ou fica so nas paginas de login - nap precisa chamar o navigation de novo nas outras pq ja ta aqui englobando tudo
+    //retorna navegacao para a pagina principal ou fica so nas paginas de login - nap precisa chamar o navigation de novo nas outras 
+    //pq ja ta aqui englobando tudo
     <NavigationContainer>
       {/* Se tem um useuario e ele ja tem o email verificado, mostra as paginas do app. */}
       {user ? <AppStack /> : <LoginStack />}
