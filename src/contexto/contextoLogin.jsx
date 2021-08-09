@@ -35,7 +35,7 @@ export const LoginProvider = ({children}) => {
           }
         },
 
-        //registrat e uma funcao que vai receber: email, senha e perfil
+        //registrar e uma funcao que vai receber: email, senha e perfil
         //perfil = demais campos, que vao para a parte de cadastro(dados)
         registrar: async (email, senha, perfil) => {
           try {

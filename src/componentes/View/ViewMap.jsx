@@ -153,7 +153,7 @@ export default function ViewMap({navigation}) {
                         lineDashPattern={[3]}  
                         onReady={result=>{
                         setDistance(result.distance);   //extrai de result o valor da distância
-                        setPrice(result.distance*3);    //Faz o calculo da distância x valor
+                        setPrice((result.distance*3).toFixed(2));    //Faz o calculo da distância x valor
                         mapEl.current.fitToCoordinates( //Responsavél por fitar a linha de cordenadas no mapa 
                             result.coordinates,{
                                 edgePadding:{

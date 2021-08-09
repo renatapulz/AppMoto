@@ -48,6 +48,7 @@ export default function Historico({navigation}){
                   <Text style={styles.h2}>Destino : { item.destino.nome }</Text>
                   <Text style={styles.h2}>Data : { item.data }</Text>
                   <Text style={styles.h2}>Hora : { item.hora }</Text>
+                  <Text style={styles.h2}>Valor : { item.preco }</Text>
                 </View>
             )}  />
             </View>
