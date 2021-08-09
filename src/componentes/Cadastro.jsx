@@ -121,17 +121,6 @@ export default function Cadastro({navigation}) {
               />
             </View>
 
-            <View style={styles.checkContainer}>
-              <View style={styles.checkAlign}>
-                  <CheckBox
-                    value={isSelected}
-                    onValueChange={setSelection}
-                    style={styles.checkbox}
-                  />
-                  <Text style={styles.label}> Eu aceito os termos de uso</Text>
-              </View>
-            </View>
-
             <TouchableOpacity style={styles.buttom} 
               onPress={() => {
                 if (senha.length < 6) {
@@ -151,8 +140,7 @@ export default function Cadastro({navigation}) {
                 
               }}>
               <Text style={styles.textbuttom}>Adicionar</Text>
-            </TouchableOpacity>
-                  
+            </TouchableOpacity>       
             <StatusBar style="auto" />
         </ScrollView>    
       </KeyboardAvoidingView>
@@ -162,19 +150,20 @@ export default function Cadastro({navigation}) {
 const styles = StyleSheet.create({
     container:{
       backgroundColor:'#FEA82F',
+      
     },
 
     logo:{
       width:150,
       height:120,
       alignSelf: "center",
+      
     },
 
     cadastro:{
       color:'white',
       fontSize:20,
       textAlign: "center",
-      marginBottom: 10 
     },
 
     conteudo: {
@@ -189,26 +178,11 @@ const styles = StyleSheet.create({
       width:'90%',
     },
     
-    checkContainer:{
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    checkAlign:{
-      flexDirection: "row",
-      marginBottom: 20,
-    },
-    checkbox: {
-      alignSelf: "center",
-    },
-    label:{
-      color:'white',
-      margin: 8,
-    },
-    
     textoinput: {
       marginHorizontal: 21,
       fontSize: 16,
       borderWidth:3,
+      width:320,
       borderColor: "white",
       backgroundColor:"white", 
       marginBottom: 15,
@@ -219,7 +193,7 @@ const styles = StyleSheet.create({
 
     buttom: {  
       backgroundColor: "#FF6701",
-      marginBottom: 20,
+      marginBottom: 30,
       padding: 10,
       borderRadius: 8,
       borderWidth: 1,

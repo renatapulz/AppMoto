@@ -40,9 +40,9 @@ export default function Editar() {
   }
 
   return(
-    <ScrollView>
+    
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === "ios" ? "padding" : "height"}>
-     
+      <ScrollView>
         <Image
           style={styles.imagem}
           source={require('../login.png')}
@@ -121,9 +121,10 @@ export default function Editar() {
           </TouchableOpacity>
         </View>
        
-      <StatusBar style="auto" />
+        <StatusBar style="auto" />
+      </ScrollView>  
     </KeyboardAvoidingView>
-  </ScrollView>   
+    
   )
 }
 
@@ -137,7 +138,8 @@ const styles = StyleSheet.create({
     height:100,
     alignSelf: "center",
     borderRadius: 50,
-    marginVertical: 20,
+    marginBottom: 20,
+    marginTop:40,
   },
 
   cadastro:{
